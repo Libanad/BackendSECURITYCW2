@@ -9,7 +9,7 @@ const customerRegister = async (req, res) => {
 
         const customer = new Customer({
             ...req.body,
-            password: hashedPass
+            password: hashedPass// hashed password
         });
 
         const existingcustomerByEmail = await Customer.findOne({ email: req.body.email });
