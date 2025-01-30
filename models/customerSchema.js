@@ -11,8 +11,8 @@ const customerSchema = new mongoose.Schema({
         required: true,
     },
     password: {
-        type: String,
-        required: true,
+        type: String,// String
+        required: true,// this is required
     },
     role: {
         type: String,
