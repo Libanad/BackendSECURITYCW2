@@ -12,7 +12,7 @@ const customerRegister = async (req, res) => {
             password: hashedPass// hashed password
         });
 
-        const existingcustomerByEmail = await Customer.findOne({ email: req.body.email });
+        const existingcustomerByEmail = await Customer.findOne({ email: req.body.email });// existing customer by email
 
         if (existingcustomerByEmail) {
             res.send({ message: 'Email already exists' });
