@@ -76,6 +76,14 @@ const customerSchema = new mongoose.Schema({
             type: Number,
         },
 
+    },
+    resetPasswordOtp: {
+        type: Number,
+        default: null
+    },
+    resetPasswordExpires: {
+        type: Date,
+        default: null,
     }
 });
 

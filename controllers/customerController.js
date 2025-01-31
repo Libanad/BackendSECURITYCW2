@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt');
 const Customer = require('../models/customerSchema.js');
 const { createNewToken } = require('../utils/token.js');
+const sendOtp = require('../service/sendOtp.js');
 
 const customerRegister = async (req, res) => {
     try {
@@ -89,9 +90,115 @@ const cartUpdate = async (req, res) => {
     }
 }
 
+const forgotPassword = async (req, res) => {
+    const { phone } = req.body;
+
+    if (!phone) {
+        return res.status(400).json({
+            success: false,
+            message: 'Phone number is required'
+        });
+    }
+
+    try {
+        const user = await Customer.findOne({ phone });
+
+        if (!user) {
+            return res.status(404).json({
+                success: false,
+                message: 'User not found'
+            });
+        }
+
+        const otp = Math.floor(100000 + Math.random() * 900000);
+
+        user.resetPasswordOtp = otp;
+        user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
+
+        const isSent = await sendOtp(phone, otp);
+
+        if(!isSent){
+            return res.status(500).json({
+                success: false,
+                message: 'Error sending OTP'
+            });
+        }
+
+        res.status(200).json({
+            success: true,
+            message: 'OTP sent successfully'
+        });
+        
+        }catch (error) {
+            console.log(error);
+            res.status(500).json({
+                success: false,
+                message: 'Internal server error'
+            });
+            
+    }
+    };
+
+const resetPasword = async (req, res) => {
+    const { phone, otp, password } = req.body;
+
+  if (!phone || !otp || !password) {
+    return res.status(400).json({
+      success: false,
+      message: "Please enter all fields",
+    });
+  }
+
+  try {
+    const user = await userModel.findOne({ phone: phone });
+    if (!user) {
+      return res.status(400).json({
+        success: false,
+        message: "User not found",
+      });
+    }
+    // Otp to integer
+    const otpToInteger = parseInt(otp);
+
+    if (user.resetPasswordOTP !== otpToInteger) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid OTP",
+      });
+    }
+
+    if (user.resetPasswordExpires < Date.now()) {
+      return res.status(400).json({
+        success: false,
+        message: "OTP expired",
+      });
+    }
+
+    const randomSalt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, randomSalt);
+
+    user.password = hashedPassword;
+    user.resetPasswordOTP = null;
+    user.resetPasswordExpires = null;
+    await user.save();
+
+    res.status(200).json({
+      success: true,
+      message: "Password reset successfully",
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      success: false,
+      message: "Internal server error",
+    });
+  }
+}
 module.exports = {
     customerRegister,
     customerLogIn,
     getCartDetail,
     cartUpdate,
+    forgotPassword,
+
 };
