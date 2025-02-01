@@ -145,7 +145,7 @@ const resetPassword = async (req, res) => {
   if (!phone || !otp || !password) {
     return res.status(400).json({
       success: false,
-      message: "Please enter all fields",
+      message: "Please enter all fields",// all field required
     });
   }
 
