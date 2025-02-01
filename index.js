@@ -26,7 +26,7 @@ mongoose
         useUnifiedTopology: true
     })
     .then(console.log("Connected to MongoDB"))
-    .catch((err) => console.log("NOT CONNECTED TO NETWORK", err))
+    .catch((err) => console.log("NOT CONNECTED TO NETWORK", err))// error message
 
 const options = {
   key: fs.readFileSync(path.resolve(__dirname, 'server.key')),
