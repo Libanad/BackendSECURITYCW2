@@ -10,10 +10,16 @@ const customerSchema = new mongoose.Schema({
         unique: true,
         required: true,
     },
+    phoneNumber: {
+        type: Number,
+        unique: true,
+        required: true
+    },
     password: {
         type: String,// String
         required: true,// this is required
     },
+    
     role: {
         type: String,
         default: "Customer"

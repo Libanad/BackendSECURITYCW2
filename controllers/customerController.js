@@ -139,7 +139,7 @@ const forgotPassword = async (req, res) => {
     }
     };
 
-const resetPasword = async (req, res) => {
+const resetPassword = async (req, res) => {
     const { phone, otp, password } = req.body;
 
   if (!phone || !otp || !password) {
@@ -200,5 +200,5 @@ module.exports = {
     getCartDetail,
     cartUpdate,
     forgotPassword,
-
+    resetPasword: resetPassword,
 };

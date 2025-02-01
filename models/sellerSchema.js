@@ -22,6 +22,11 @@ const sellerSchema = new mongoose.Schema({
         type: String,
         unique: true,
         required: true
+    },
+    phoneNumber: {
+        type: Number,
+        unique: true,
+        required: true
     }
 });
 

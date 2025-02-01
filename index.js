@@ -6,9 +6,12 @@ const dotenv = require("dotenv")
 const https = require ("https")
 const fs = require('fs');
 const path = require('path');
+const cookieParser = require('cookie-parser');
+
 
 const app = express()
 const Routes = require("./routes/route.js")
+app.use(cookieParser());
 
 const PORT = process.env.PORT || 5000
 

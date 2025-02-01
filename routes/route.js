@@ -29,7 +29,9 @@ const {
     customerRegister,
     customerLogIn,
     getCartDetail,
-    cartUpdate
+    cartUpdate,
+    resetPasword,
+    forgotPassword,
 } = require('../controllers/customerController.js');
 
 const {
@@ -68,6 +70,8 @@ router.post('/CustomerRegister', customerRegister);
 router.post('/CustomerLogin', customerLogIn);
 router.get('/getCartDetail/:id', getCartDetail);
 router.put('/CustomerUpdate/:id', cartUpdate);
+router.post('/resetPassword', resetPasword);
+router.post('/forgotPassword', forgotPassword);
 
 // Order
 router.post('/newOrder', newOrder);
