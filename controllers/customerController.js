@@ -170,7 +170,7 @@ const resetPassword = async (req, res) => {
     if (user.resetPasswordExpires < Date.now()) {
       return res.status(400).json({
         success: false,
-        message: "OTP expired",
+        message: "OTP expired", // expirt
       });
     }
 
@@ -184,7 +184,7 @@ const resetPassword = async (req, res) => {
 
     res.status(200).json({
       success: true,
-      message: "Password reset successfully",
+      message: "Password reset successfully",// reset 
     });
   } catch (error) {
     console.log(error);
