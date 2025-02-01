@@ -179,7 +179,7 @@ const resetPassword = async (req, res) => {
 
     user.password = hashedPassword;
     user.resetPasswordOTP = null;
-    user.resetPasswordExpires = null;
+    user.resetPasswordExpires = null;// null
     await user.save();
 
     res.status(200).json({
